@@ -11,6 +11,7 @@ import { GrStatusWarning } from "react-icons/gr";
 
 const HeroHome = () => {
   const [open, setOpen] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const [showPassword, setShowpassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -99,14 +100,7 @@ const HeroHome = () => {
             </ul>
             <ul className="flex gap-2 items-center px-6">
               <li className="">
-                <Login
-                  open={open}
-                  setOpen={setOpen}
-                  setEmail={setEmail}
-                  emailErr={emailErr}
-                  handleSubmit={handleSubmit}
-                  email={email}
-                />
+                <Login open={openLogin} setOpen={setOpenLogin} />
               </li>
               <li className="">
                 <SignUp open={open} setOpen={setOpen} />
@@ -123,7 +117,7 @@ const HeroHome = () => {
               Sign up to get your ideas
             </h1>
           </div>
-          <div id="login" className={`h-full w-2/5 ${open ? " hidden" : ""}`}>
+          <div id="login" className={`h-full w-2/5 ${open ? " hidden" : ""}  ${openLogin ? " hidden" : ""} `}>
             <div className="h-full bg-white w-4/5 flex items-center justify-center flex-col">
               <img src={pLogo} alt="logo" className="h-8" />
               <h1 className="font-bold text-3xl">Welcome to Pinterest</h1>
@@ -167,7 +161,6 @@ const HeroHome = () => {
                           {passwordErr}
                         </span>
                       )}
-
                       <span
                         className="absolute right-5 top-10"
                         onClick={handleShowPassword}

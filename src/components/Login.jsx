@@ -5,17 +5,46 @@ import { SiFacebook } from "react-icons/si";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import LoginModal from "./LoginModal";
+import { GrStatusWarning } from "react-icons/gr";
 
-const Login = ({ open, setOpen, handleSubmit, email, setEmail, emailErr }) => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState(false);
+
+const Login = ({ open, setOpen }) => {
+ 
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
+  const [emailErr, setEmailErr] = useState("");
 
-  const submitHandler = async (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
+    // Regular expression for validating email addresses
+    const emailInput = email.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailInput || !emailRegex.test(emailInput)) {
+      setEmailErr("Hmm, that does not look like an email address.");
+    } else {
+      setEmailErr("");
+      // Perform your submit logic here
+    }
+
+    const passwordInput = password.trim();
+    if (!passwordInput || passwordInput.length < 6) {
+      setPasswordErr("Your password is too short! You need 6+ characters.");
+    } else {
+      setPasswordErr("");
+      // Perform your submit logic here
+    }
+
+    if (!emailInput && !passwordInput) {
+      setEmailErr("You missed a spot, Don't forget to add your email");
+    } else if (emailInput && !passwordInput) {
+      setPasswordErr("You missed a spot, Don't forget to add your password");
+    } else if (emailInput && passwordInput && !dob) {
+      setDobErr("You missed a spot, Don't forget to add your birthday");
+    }
   };
 
   const handleShowPassword =()=>{
@@ -38,34 +67,46 @@ const Login = ({ open, setOpen, handleSubmit, email, setEmail, emailErr }) => {
               className="w-4/6 h-auto flex flex-col gap-2"
               onSubmit={handleSubmit}
             >
-              <div>
-                <label className="flex flex-col">
-                  <span className="px-2">Email</span>
-                  <input
-                    type="text"
-                    maxLength={26}
-                    value={email}
-                    placeholder="Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="p-3 border-2 border-gray-300 rounded-2xl focus:outline-4 outline-none focus:border-none focus:outline-sky-300  "
-                  />
-                </label>
-                {emailErr && (
+                  <div>
+                    <label className="flex flex-col">
+                      <span className="px-2">Email</span>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        className="p-3 border-2 border-gray-300 rounded-2xl focus:outline-4 outline-none focus:border-none focus:outline-sky-300  "
+                      />
+                    </label>
+                    {emailErr && (
                       <span className="text-xs px-1 flex gap-1 items-center text-red-600 font-semibold">
                         <GrStatusWarning />
                         {emailErr}
                       </span>
                     )}
-              </div>
-              <div className="relative">
+                  </div>
+                  <div className="relative">
                     <label className="flex flex-col">
                       <span className="px-2">Password</span>
                       <input
                         type={showPassword ? "text" : "password"}
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
                         placeholder="Create a password"
                         className="p-3 border-2  border-gray-300 rounded-2xl focus:outline-4 outline-none focus:border-none focus:outline-sky-300 "
                       />
-                      <span className="absolute right-5 top-10" onClick={handleShowPassword} >{showPassword ? <FaEye /> : <FaEyeSlash />}</span>
+                      {passwordErr && (
+                        <span className="text-xs px-1 flex gap-1 items-center text-red-600 font-semibold">
+                          <GrStatusWarning />
+                          {passwordErr}
+                        </span>
+                      )}
+                      <span
+                        className="absolute right-5 top-10"
+                        onClick={handleShowPassword}
+                      >
+                        {showPassword ? <FaEye /> : <FaEyeSlash />}
+                      </span>
                     </label>
                   </div>
               <button

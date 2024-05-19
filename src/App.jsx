@@ -4,14 +4,20 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import HeroHome from "./pages/Heros";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomeLayout from "./pages/HomeLayout";
+import Detail from "./pages/Detail";
+import Create from "./pages/Create";
+
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<HomeLayout />} />
+          <Route path="/detail/:productId" element={<Detail />} />
           <Route path="/" element={<HeroHome />} />
+          <Route path="/create" element={<Create />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<SignUp />} />
         </Routes>
