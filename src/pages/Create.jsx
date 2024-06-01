@@ -7,16 +7,15 @@ const Create = () => {
 
   const handleSubmitClick = () => {
     if (createPinRef.current) {
-      createPinRef.current.dispatchEvent(
-        new Event("submit", { bubbles: true, cancelable: true })
-      );
+      createPinRef.current.submit();
     }
   };
 
   return (
     <>
       <Header />
-      <div className="h-auto xl:h-[600px] border-t border-gray-500 mt-8 xl:mt-[100px] flex flex-col xl:flex-row gap-2 container mx-auto">        <div className="w-full xl:w-[450px] border-t border-gray-500 xl:border-r flex flex-col space-y-4">
+      <div className="h-auto xl:h-[600px] border-t border-gray-500 mt-8 xl:mt-[100px] flex flex-col xl:flex-row gap-2 container mx-auto">
+        <div className="w-full xl:w-[450px] border-t border-gray-500 xl:border-r flex flex-col space-y-4">
           {/* Create Control */}
           <div className="border-b border-gray-400 flex flex-col justify-around py-4">
             <h1 className="flex justify-between px-4 text-lg font-bold">
@@ -39,6 +38,8 @@ const Create = () => {
         <div className="flex flex-col w-full">
           <div className="border-b border-gray-500 flex items-center justify-between px-4 py-4">
             <p>Create Pin</p>
+
+            {/* Submit button here */}
             <button
               className="text-white bg-red-600 p-3 rounded-3xl px-5 hover:bg-red-700"
               onClick={handleSubmitClick}

@@ -1,11 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
 
-const CreatePin = () => {
+const CreatePin = forwardRef((props, ref) => {
   const [image, setImage] = useState(null);
   const [formEnabled, setFormEnabled] = useState(false);
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
   const formRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    submit: () => {
+      if (formRef.current) {
+        formRef.current.dispatchEvent(
+          new Event("submit", { bubbles: true, cancelable: true })
+        );
+      }
+    },
+  }));
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -163,9 +173,16 @@ const CreatePin = () => {
             ))}
           </div>
         </div>
+        {/* <button 
+          type="submit" 
+          className={`px-4 py-2 mt-4 text-white ${formEnabled ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-300 cursor-not-allowed'}`} 
+          disabled={!formEnabled}
+        >
+          Submit
+        </button> */}
       </form>
     </div>
   );
-};
+});
 
 export default CreatePin;

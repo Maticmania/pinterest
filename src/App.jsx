@@ -7,12 +7,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomeLayout from "./pages/HomeLayout";
 import Detail from "./pages/Detail";
 import Create from "./pages/Create";
+import ScrollToTop from "./components/SmoothScrolling";
 
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <ScrollToTop/>
         <Routes>
           <Route path="/home" element={<HomeLayout />} />
           <Route path="/detail/:productId" element={<Detail />} />
